@@ -8,21 +8,23 @@ This project implements a centralized key-value store server in Go. The server a
 
 - **Concurrent Client Support**: Manages multiple clients simultaneously using goroutines.
 - **Key-Value Operations**:
-    - `PUT`: Add a new key-value pair.
-    - `GET`: Retrieve values associated with a key.
-    - `UPDATE`: Update an existing key-value pair.
-    - `DELETE`: Remove a key-value pair.
+  - `PUT`: Add a new key-value pair.
+  - `GET`: Retrieve values associated with a key.
+  - `UPDATE`: Update an existing key-value pair.
+  - `DELETE`: Remove a key-value pair.
 - **Client Management**:
-    - Tracks active and dropped clients.
-    - Handles client disconnections gracefully.
+  - Tracks active and dropped clients.
+  - Handles client disconnections gracefully.
 - **Thread-Safe Implementation**: Ensures safe access to shared resources.
 
 ## Project Structure
 
-- `p0partA/server_api.go`: Defines the `KeyValueServer` interface (do not modify this file).
-- `p0partA/server_impl.go`: Implements the server logic, including client handling and request processing.
-- `p0partA/constants.go`: Contains constants used across the server.
-- `p0partA/kvstore/kv_impl.go`: Implements the key-value store logic.
+- `constants.go`: Contains command types and connection constants used across the server.
+- `server_api.go`: Defines the `KeyValueServer` interface.
+- `server_impl.go`: Implements the server logic, including client handling and request processing.
+- `server_test.go`: Comprehensive test suite for server functionality.
+- `kvstore/kv_api.go`: Defines the `KVStore` interface for key-value operations.
+- `kvstore/kv_impl.go`: Implements the in-memory key-value store logic.
 - `srunner/srunner.go`: Starts the server and listens for client connections.
 - `crunner/crunner.go`: A simple client program to test the server.
 
@@ -45,7 +47,7 @@ The server is implemented in `server_impl.go` and includes:
 
 ### Key-Value Store
 
-The key-value store is implemented in `kv_impl.go` and provides:
+The key-value store is implemented in `kvstore/kv_impl.go` and provides:
 - `Put(key string, value []byte)`: Adds a new key-value pair.
 - `Get(key string) [][]byte`: Retrieves all values associated with a key.
 - `Update(key string, oldValue, newValue []byte)`: Updates a specific value for a key.
@@ -87,9 +89,12 @@ If you are running the server using the `srunner` program, you can terminate the
 
 ## Running Tests
 
-This project includes a comprehensive test suite to verify the functionality of the key-value store server. The tests are located in `./server_test.go`.
-
-### Running the Tests
+This project includes a comprehensive test suite to verify the functionality of both the key-value store and the server
+- server_test.go: Tests server functionality including:
+- Basic server operations
+- Concurrent client handling
+- Slow client behavior
+- Client connection tracking
 
 To run the tests, use the following command:
 
